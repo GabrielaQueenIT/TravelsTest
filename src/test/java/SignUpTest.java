@@ -12,15 +12,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class SignUpTest {
+public class SignUpTest extends BaseTest{
+
 
     @Test
-    public void signUp() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void signUpTest() {
 
         int randomNumber = (int) (Math.random()*1000);
         String  email = "tester" + randomNumber + "@tester.pl";
@@ -44,17 +40,11 @@ public class SignUpTest {
         Assert.assertFalse(false, h3);
         Assert.assertEquals(h3, "Hi, Bartek Testowy");
 
-        driver.quit();
 
     }
 
     @Test
-    public void signUpWithEmptyFields() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void signUpWithEmptyFieldsTest() {
 
         driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
@@ -70,19 +60,11 @@ public class SignUpTest {
         softAssert.assertTrue(results.contains("The Last Name field is required."));
         softAssert.assertAll();
 
-        driver.quit();
 
     }
 
     @Test
-    public void signUpWithInvalidEmail() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
-
-
+    public void signUpWithInvalidEmailTest() {
         driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
 
@@ -98,8 +80,6 @@ public class SignUpTest {
 
         Assert.assertTrue(error.isDisplayed(), "The Email field must contain a valid email address.");
         Assert.assertEquals(error.getText(), "The Email field must contain a valid email address.");
-
-        driver.quit();
 
     }
 }

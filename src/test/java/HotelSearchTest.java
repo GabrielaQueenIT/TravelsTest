@@ -1,24 +1,17 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class HotelSearch {
+public class HotelSearchTest extends BaseTest{
+
 
     @Test
-    public void searchHotel() throws InterruptedException {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    public void searchHotelTest() throws InterruptedException {
+
 
         driver.findElement(By.xpath("//span[text()='Search by Hotel or City Name']")).click();
         driver.findElement(By.xpath("//div[@id='select2-drop']//input")).sendKeys("Dubai");
@@ -58,17 +51,12 @@ public class HotelSearch {
         Assert.assertEquals("Rose Rayhaan Rotana", hotelNames.get(2));
         Assert.assertEquals("Hyatt Regency Perth", hotelNames.get(3));
 
-        driver.quit();
+
     }
 
     @Test
-    public void searchWithoutHotel() {
+    public void searchWithoutHotelTest() {
 
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.name("checkin")).sendKeys("17/03/2023");
         driver.findElement(By.name("checkout")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='20']"))
@@ -88,6 +76,6 @@ public class HotelSearch {
         Assert.assertEquals(result.getText(), "No Results Found");
         Assert.assertTrue(result.isDisplayed());
 
-        driver.quit();
+
     }
 }
