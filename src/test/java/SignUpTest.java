@@ -21,6 +21,8 @@ public class SignUpTest {
         driver.manage().window().maximize();
         driver.get("http://www.kurs-selenium.pl/demo/");
 
+        int randomNumber = (int) (Math.random()*1000);
+        String  email = "tester" + randomNumber + "@tester.pl";
         String lastName = "Testowy";
         driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
@@ -28,7 +30,7 @@ public class SignUpTest {
         driver.findElement(By.name("firstname")).sendKeys("Bartek");
         driver.findElement(By.name("lastname")).sendKeys("Testowy");
         driver.findElement(By.name("phone")).sendKeys("111111111");
-        driver.findElement(By.name("email")).sendKeys("tester2@testerw.com");
+        driver.findElement(By.name("email")).sendKeys(email);
         driver.findElement(By.name("password")).sendKeys("Test123");
         driver.findElement(By.name("confirmpassword")).sendKeys("Test123");
         driver.findElement(By.xpath("//button[@type='submit']")).click();
